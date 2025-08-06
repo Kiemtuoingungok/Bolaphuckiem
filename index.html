@@ -14,13 +14,13 @@
     }
 
     h1 {
-      font-size: 30px;
+      font-size: 28px;
       margin: 30px 0;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 2px solid orange;
+      border-right: 2px solid white;
       width: 0;
-      animation: typing 3s steps(30, end) forwards, colorChange 4s infinite;
+      animation: typing 3s steps(40, end) forwards, colorChange 5s infinite;
     }
 
     @keyframes typing {
@@ -31,13 +31,13 @@
     @keyframes colorChange {
       0%   { color: red; }
       25%  { color: yellow; }
-      50%  { color: lime; }
-      75%  { color: cyan; }
+      50%  { color: cyan; }
+      75%  { color: lime; }
       100% { color: red; }
     }
 
     img {
-      width: 100%;
+      width: 90%;
       max-width: 600px;
       margin: 10px auto;
       display: block;
@@ -70,17 +70,17 @@
     Trình duyệt không hỗ trợ phát nhạc.
   </audio>
 
-  <!-- Ảnh hiển thị -->
-  <img src="A.jpg" alt="A">
-  <img src="B.jpg" alt="B">
-  <img src="C.jpg" alt="C">
-  <img src="D.jpg" alt="D">
-  <img src="anh.jpg" alt="anh">
-  <img src="Kiem.jpg" alt="Kiem">
+  <img src="A.jpg" alt="Ảnh A">
+  <img src="B.jpg" alt="Ảnh B">
+  <img src="C.jpg" alt="Ảnh C">
+  <img src="D.jpg" alt="Ảnh D">
+  <img src="anh.jpg" alt="Ảnh anh">
+  <img src="Kiem.jpg" alt="Ảnh Kiem">
 
   <script>
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("music-btn");
+
     function toggleMusic() {
       if (music.paused) {
         music.play();
@@ -92,4 +92,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
