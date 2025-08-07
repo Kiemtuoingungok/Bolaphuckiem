@@ -1,94 +1,128 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Con Trai Hốc Trưởng</title>
+  <meta charset="UTF-8">
+  <title>Con Trai Hốc Trưởng - Kiểm Nguyễn</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       background-color: black;
       color: white;
       font-family: 'Arial', sans-serif;
       text-align: center;
-      margin: 0;
-      padding: 0;
       overflow: hidden;
     }
 
     h1 {
-      font-size: 2em;
-      margin: 20px 0;
-      animation: glow 2s ease-in-out infinite alternate;
+      font-size: 3em;
+      color: #00ffff;
+      animation: glow 2s infinite alternate;
+      margin-top: 20px;
     }
 
     @keyframes glow {
       from {
-        text-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow;
+        text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
       }
       to {
-        text-shadow: 0 0 20px cyan, 0 0 30px blue, 0 0 40px purple;
+        text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
       }
     }
 
     img {
-      max-width: 90%;
+      width: 80%;
+      max-width: 600px;
       height: auto;
-      border: 4px solid white;
-      border-radius: 15px;
       margin-top: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px white;
     }
 
-    /* Tuyết rơi */
     .snowflake {
       position: fixed;
-      top: -10px;
-      z-index: 9999;
-      color: white;
-      font-size: 1em;
-      user-select: none;
-      pointer-events: none;
-      animation: fall 10s linear infinite;
+      top: 0;
+      background: white;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
     }
 
     @keyframes fall {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(100vh); }
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background: #00ffff;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff;
     }
   </style>
 </head>
 <body>
   <h1>Con Trai Hốc Trưởng - Kiểm Nguyễn</h1>
-  <img id="slideshow" src="A.jpg" alt="Slideshow ảnh" />
-  <audio autoplay loop>
+  <img id="slideshow" src="A.jpg" alt="Slideshow">
+
+  <!-- Nhạc -->
+  <audio id="bgm" autoplay loop>
     <source src="Gay.mp3" type="audio/mpeg">
-    Trình duyệt của bạn không hỗ trợ phát nhạc.
+    Trình duyệt của bạn không hỗ trợ audio.
   </audio>
 
-  <!-- Hiệu ứng đổi ảnh -->
+  <!-- Nút bật/tắt nhạc -->
+  <button id="musicBtn">Tắt nhạc</button>
+
   <script>
+    // Slideshow ảnh
     const images = ["A.jpg", "B.jpg", "C.jpg", "D.jpg", "anh.jpg", "Kiem.jpg"];
     let current = 0;
-    const imgElement = document.getElementById("slideshow");
+    const slide = document.getElementById("slideshow");
 
     setInterval(() => {
       current = (current + 1) % images.length;
-      imgElement.src = images[current];
-    }, 5000);
-  </script>
+      slide.src = images[current];
+    }, 3000); // đổi ảnh mỗi 3 giây
 
-  <!-- Tạo tuyết rơi -->
-  <script>
+    // Nút bật tắt nhạc
+    const music = document.getElementById("bgm");
+    const musicBtn = document.getElementById("musicBtn");
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = "Tắt nhạc";
+      } else {
+        music.pause();
+        musicBtn.textContent = "Bật nhạc";
+      }
+    });
+
+    // Hiệu ứng tuyết
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.animationDuration = (5 + Math.random() * 5) + "s";
-      snowflake.style.opacity = Math.random();
-      snowflake.innerText = "❄";
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${2 + Math.random() * 3}s`;
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 10000);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
     }
-    setInterval(createSnowflake, 200);
+
+    setInterval(createSnowflake, 100);
   </script>
 </body>
 </html>
