@@ -1,91 +1,94 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Con Trai Hốc Trưởng - Kiểm Nguyễn</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Con Trai Hốc Trưởng</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: black;
+      background-color: black;
       color: white;
       font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
     }
 
     h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-top: 20px;
-      animation: glow 2s infinite alternate;
+      font-size: 2em;
+      margin: 20px 0;
+      animation: glow 2s ease-in-out infinite alternate;
     }
 
     @keyframes glow {
-      from { text-shadow: 0 0 5px red; }
-      to { text-shadow: 0 0 20px yellow; }
+      from {
+        text-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow;
+      }
+      to {
+        text-shadow: 0 0 20px cyan, 0 0 30px blue, 0 0 40px purple;
+      }
     }
 
-    .slideshow {
+    img {
       max-width: 90%;
-      max-height: 80vh;
-      margin: 30px auto;
-      text-align: center;
-    }
-
-    .slideshow img {
-      width: auto;
-      height: 500px;
+      height: auto;
+      border: 4px solid white;
       border-radius: 15px;
-      box-shadow: 0 0 20px white;
-      animation: fade 1s ease-in-out;
+      margin-top: 20px;
     }
 
-    @keyframes fade {
-      from { opacity: 0.4 }
-      to { opacity: 1 }
-    }
-
-    canvas {
+    /* Tuyết rơi */
+    .snowflake {
       position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
+      top: -10px;
       z-index: 9999;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      animation: fall 10s linear infinite;
     }
 
-    audio {
-      display: none;
+    @keyframes fall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
     }
   </style>
 </head>
 <body>
-
   <h1>Con Trai Hốc Trưởng - Kiểm Nguyễn</h1>
-
-  <div class="slideshow">
-    <img id="slideshow-img" src="A.jpg" alt="Slideshow">
-  </div>
-
+  <img id="slideshow" src="A.jpg" alt="Slideshow ảnh" />
   <audio autoplay loop>
     <source src="Gay.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ phát nhạc.
   </audio>
 
-  <canvas id="snow"></canvas>
-
+  <!-- Hiệu ứng đổi ảnh -->
   <script>
     const images = ["A.jpg", "B.jpg", "C.jpg", "D.jpg", "anh.jpg", "Kiem.jpg"];
-    let index = 0;
-    const slideshowImg = document.getElementById("slideshow-img");
+    let current = 0;
+    const imgElement = document.getElementById("slideshow");
 
     setInterval(() => {
-      index = (index + 1) % images.length;
-      slideshowImg.src = images[index];
-    }, 5000); // 5 giây
+      current = (current + 1) % images.length;
+      imgElement.src = images[current];
+    }, 5000);
+  </script>
 
-    // Snowfall
-    const canvas = document.getElementById("snow");
-    const ctx = canvas.getContext("2d");
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    const numFl
+  <!-- Tạo tuyết rơi -->
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = (5 + Math.random() * 5) + "s";
+      snowflake.style.opacity = Math.random();
+      snowflake.innerText = "❄";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
+    }
+    setInterval(createSnowflake, 200);
+  </script>
+</body>
+</html>
