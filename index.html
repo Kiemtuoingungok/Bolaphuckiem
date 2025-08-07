@@ -7,56 +7,54 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: black;
-      font-family: 'Segoe UI', sans-serif;
+      background: black;
       color: white;
-      text-align: center;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 28px;
-      margin: 30px 0;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid white;
-      width: 0;
-      animation: typing 3s steps(40, end) forwards, colorChange 5s infinite;
+      text-align: center;
+      font-size: 2.5em;
+      margin-top: 20px;
+      animation: glow 2s infinite alternate;
     }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px red; }
+      to { text-shadow: 0 0 20px yellow; }
     }
 
-    @keyframes colorChange {
-      0%   { color: red; }
-      25%  { color: yellow; }
-      50%  { color: cyan; }
-      75%  { color: lime; }
-      100% { color: red; }
+    .slideshow {
+      max-width: 90%;
+      max-height: 80vh;
+      margin: 30px auto;
+      text-align: center;
     }
 
-    img {
-      width: 90%;
-      max-width: 600px;
-      margin: 10px auto;
-      display: block;
-      border-radius: 12px;
-      box-shadow: 0 0 15px white;
+    .slideshow img {
+      width: auto;
+      height: 500px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px white;
+      animation: fade 1s ease-in-out;
     }
 
-    #music-btn {
+    @keyframes fade {
+      from { opacity: 0.4 }
+      to { opacity: 1 }
+    }
+
+    canvas {
       position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 10px;
-      background: white;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 999;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
@@ -64,32 +62,30 @@
 
   <h1>Con Trai Hốc Trưởng - Kiểm Nguyễn</h1>
 
-  <button id="music-btn" onclick="toggleMusic()">🔊 Tắt nhạc</button>
-  <audio id="bg-music" autoplay loop>
+  <div class="slideshow">
+    <img id="slideshow-img" src="A.jpg" alt="Slideshow">
+  </div>
+
+  <audio autoplay loop>
     <source src="Gay.mp3" type="audio/mpeg">
-    Trình duyệt không hỗ trợ phát nhạc.
   </audio>
 
-  <img src="A.jpg" alt="Ảnh A">
-  <img src="B.jpg" alt="Ảnh B">
-  <img src="C.jpg" alt="Ảnh C">
-  <img src="D.jpg" alt="Ảnh D">
-  <img src="anh.jpg" alt="Ảnh anh">
-  <img src="Kiem.jpg" alt="Ảnh Kiem">
+  <canvas id="snow"></canvas>
 
   <script>
-    const music = document.getElementById("bg-music");
-    const btn = document.getElementById("music-btn");
+    const images = ["A.jpg", "B.jpg", "C.jpg", "D.jpg", "anh.jpg", "Kiem.jpg"];
+    let index = 0;
+    const slideshowImg = document.getElementById("slideshow-img");
 
-    function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        btn.textContent = "🔊 Tắt nhạc";
-      } else {
-        music.pause();
-        btn.textContent = "🔈 Bật nhạc";
-      }
-    }
-  </script>
-</body>
-</html> 
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      slideshowImg.src = images[index];
+    }, 5000); // 5 giây
+
+    // Snowfall
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const numFl
